@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        PartyManager manager = new PartyManager();
+
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("=== Party Invitation Manager ===");
@@ -14,7 +14,7 @@ public class Main {
         String password = scanner.nextLine();
 
         EmailService emailService = new EmailService(sender, password);
-
+        PartyManager manager = new PartyManager(new ContactDatabase(), emailService);
         while (true) {
             System.out.println("\n1. Add contact\n2. View contacts\n3. Create invitation\n4. Exit");
             System.out.print("Choose: ");
@@ -47,7 +47,7 @@ public class Main {
                         invite.addRecipient(contacts.get(Integer.parseInt(n.trim()) - 1));
                     }
 
-                    emailService.sendInvitation(invite);
+                    manager.sendInvitation(invite);
                 }
                 case 4 -> {
                     System.out.println("Goodbye!");

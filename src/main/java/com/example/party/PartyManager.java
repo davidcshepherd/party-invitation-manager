@@ -4,9 +4,11 @@ import java.util.List;
 
 public class PartyManager {
     private final ContactDatabase db;
+    private final EmailService emailService;
 
-    public PartyManager() {
-        db = new ContactDatabase();
+    public PartyManager(ContactDatabase myDb, EmailService myEmailService) {
+        db = myDb;
+        emailService = myEmailService;
     }
 
     public void addContact(String name, String email) {
@@ -15,5 +17,9 @@ public class PartyManager {
 
     public List<Contact> getContacts() {
         return db.getAllContacts();
+    }
+
+    public void sendInvitation(Invitation invite) {
+        emailService.sendInvitation(invite);
     }
 }
