@@ -22,4 +22,13 @@ public class PartyManager {
     public void sendInvitation(Invitation invite) {
         emailService.sendInvitation(invite);
     }
+
+    public void sendInvitationToAll(Invitation invite) {
+        for(Contact contact : db.getAllContacts()) {
+            invite.addRecipient(contact);
+        }
+        emailService.sendInvitation(invite);
+    }
+
+
 }

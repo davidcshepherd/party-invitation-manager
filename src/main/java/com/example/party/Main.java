@@ -13,7 +13,7 @@ public class Main {
         System.out.print("Email password (app password recommended): ");
         String password = scanner.nextLine();
 
-        EmailService emailService = new EmailService(sender, password);
+        EmailService emailService = new EmailService(new ActualEmailSender(sender, password));
         PartyManager manager = new PartyManager(new ContactDatabase(), emailService);
         while (true) {
             System.out.println("\n1. Add contact\n2. View contacts\n3. Create invitation\n4. Exit");
