@@ -29,20 +29,24 @@ public class EmailService {
 
     public void sendInvitation(Invitation invitation) {
         for (Contact c : invitation.getRecipients()) {
-            try {
-                Message message = new MimeMessage(session);
-                message.setFrom(new InternetAddress(username));
-                message.setRecipients(
-                        Message.RecipientType.TO,
-                        InternetAddress.parse(c.getEmail())
-                );
-                message.setSubject(invitation.getSubject());
-                message.setText(invitation.getMessage());
-                Transport.send(message);
-                System.out.println("Invitation sent to " + c.getEmail());
-            } catch (MessagingException e) {
-                System.out.println("Failed to send to " + c.getEmail() + ": " + e.getMessage());
-            }
+            sendSingleEmail(invitation, c);
+        }
+    }
+
+    protected void sendSingleEmail(Invitation invitation, Contact c) {
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username));
+            message.setRecipients(
+                    Message.RecipientType.TO,
+                    InternetAddress.parse(c.getEmail())
+            );
+            message.setSubject(invitation.getSubject());
+            message.setText(invitation.getMessage());
+            Transport.send(message);
+            System.out.println("Invitation sent to " + c.getEmail());
+        } catch (MessagingException e) {
+            System.out.println("Failed to send to " + c.getEmail() + ": " + e.getMessage());
         }
     }
 }
